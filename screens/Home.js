@@ -1,4 +1,4 @@
-import { Button, Header, Text } from '@rneui/themed';
+import { Button, Card, Divider, Header, Text } from '@rneui/themed';
 import { View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
@@ -41,19 +41,25 @@ const Home = ({ navigation }) => {
       </View>
     );
   }
+
   return (
     <View style={styles.container}>
       <Header
         centerComponent={{ text: 'Food Checker', style: styles.heading }}
       ></Header>
-      <Text style={styles.desc}>Scan Barcode to get the food details</Text>
-      <View style={styles.scannerBox}>
-        {isFocused && (
-          <BarCodeScanner
-            onBarCodeScanned={handleBarCodeScanned}
-            style={styles.scanner}
-          />
-        )}
+      <View style={styles.container}>
+        <Text style={styles.title}>Scan a barcode to get nutrient facts</Text>
+        <View style={styles.scannerBox}>
+          {isFocused && (
+            <BarCodeScanner
+              onBarCodeScanned={handleBarCodeScanned}
+              style={styles.scanner}
+            />
+          )}
+        </View>
+        <Text style={styles.title}>
+          Search over 700,000 unique UPC codes in our database
+        </Text>
       </View>
     </View>
   );

@@ -17,7 +17,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 30,
+    margin: 10,
+    fontSize: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   desc: {
     marginVertical: 10,
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     width: 300,
     overflow: 'hidden',
     borderRadius: 30,
-    backgroundColor: 'tomato',
+    backgroundColor: 'blue',
   },
   scanner: {
     height: 600,
@@ -48,10 +51,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     alignItems: 'center',
   },
-  text: {
-    fontSize: 24,
+  errorText: {
+    color: 'red',
+    fontSize: 16,
     fontWeight: 'bold',
-    color: 'white',
+    marginVertical: 10,
   },
 });
 

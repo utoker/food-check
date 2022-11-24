@@ -1,21 +1,18 @@
-import { Button, Header, ListItem, Text } from '@rneui/themed';
+import { Button, Header, ListItem, Skeleton, Text } from '@rneui/themed';
 import { useState, useEffect } from 'react';
 import { View } from 'react-native';
-// import { API_URL, API_KEY, API_ID } from '@env';
+import { API_URL, API_KEY, API_ID } from '@env';
 import axios from 'axios';
 import { nutrientNames, nutrientsUnits } from '../tools/nutrients';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from '../styles';
-
-const API_URL = 'https://api.edamam.com/api/food-database/v2/parser';
-const API_ID = '62cba52a';
-const API_KEY = 'ddf6b6e9f3c881a59d53b4a41be7931f';
 
 const Details = ({ route, navigation }) => {
   // const route = { params: { upc: '0047495710052' } };
   const [food, setFood] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   const getFoodDetails = async () => {
     const upc = route.params.upc;
@@ -32,10 +29,9 @@ const Details = ({ route, navigation }) => {
       setFood(data);
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      console.log('err', err);
       setError(err);
       setLoading(false);
-      throw error;
     }
   };
   useEffect(() => {
@@ -43,11 +39,11 @@ const Details = ({ route, navigation }) => {
   }, []);
 
   const nuts = food?.hints[0].food.nutrients;
-  const test = [];
+  const nutrientFacts = [];
   if (nuts) {
     for (const n in nuts) {
       if (nutrientNames[n]) {
-        test.push({
+        nutrientFacts.push({
           nutrientName: nutrientNames[n],
           unit: nuts[n],
           unitType: nutrientsUnits[n],
@@ -57,30 +53,64 @@ const Details = ({ route, navigation }) => {
   }
   const knownAs = food?.hints[0].food.knownAs;
   const label = food?.hints[0].food.label;
+  const contents = food?.hints[0].food.foodContentsLabel;
   // console.log('knownAs', food?.hints[0].food.knownAs);
   // console.log('label', food?.hints[0].food.label);
 
+  //
+  if (error?.response.status === 404) {
+    return (
+      <View>
+        <Header
+          centerComponent={{ text: 'Not Found', style: styles.heading }}
+        />
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={styles.errorText}>
+            Sorry, we couldn't find any information about this product.
+          </Text>
+        </View>
+        <Button title="Go back" onPress={() => navigation.goBack()} />
+      </View>
+    );
+  }
   return (
     <View>
       <Header
         centerComponent={{ text: knownAs, style: styles.heading }}
       ></Header>
-      {loading ? (
-        <Text>Loading...</Text>
-      ) : (
-        test.map((n, i) => (
-          <ListItem key={i} bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title>{n.nutrientName}</ListItem.Title>
-            </ListItem.Content>
-            <ListItem.Content right>
+      {nutrientFacts.map((n, i) => (
+        <ListItem key={i} bottomDivider>
+          <ListItem.Content>
+            {<ListItem.Title>{n.nutrientName}</ListItem.Title> || (
+              <Skeleton width={120} height={40} />
+            )}
+          </ListItem.Content>
+          <ListItem.Content right>
+            {(
               <ListItem.Title>
                 {Math.round(n.unit) + ' ' + n.unitType}
               </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        ))
-      )}
+            ) || <Skeleton width={120} height={40} />}
+          </ListItem.Content>
+        </ListItem>
+      ))}
+      <ListItem.Accordion
+        content={
+          <ListItem.Content>
+            <ListItem.Title>Ingredients</ListItem.Title>
+          </ListItem.Content>
+        }
+        isExpanded={expanded}
+        onPress={() => {
+          setExpanded(!expanded);
+        }}
+      >
+        <ListItem>
+          <ListItem.Content>
+            <ListItem.Subtitle>{contents}</ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
+      </ListItem.Accordion>
       <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
   );
