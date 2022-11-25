@@ -28,21 +28,37 @@ const Home = ({ navigation }) => {
   if (hasPermission === null) {
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>
-          Requesting for camera permission
-        </Text>
+        <Header
+          backgroundColor="#FF5C4D"
+          centerComponent={{
+            text: 'Food Check',
+            style: styles.heading,
+          }}
+        ></Header>
+        <Text style={styles.title}>Requesting for camera permission</Text>
       </View>
     );
   }
   if (hasPermission === false) {
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>
+        <Header
+          backgroundColor="#FF5C4D"
+          centerComponent={{
+            text: 'Food Check',
+            style: styles.heading,
+          }}
+        ></Header>
+        <Text style={styles.title}>
           We need your permission to show the camera
         </Text>
         <Button
+          buttonStyle={{
+            backgroundColor: '#FF5C4D',
+            borderRadius: 5,
+          }}
           onPress={getBarCodeScannerPermissions}
-          title="grant permission"
+          title="Grant Permission"
         />
       </View>
     );
