@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   header: {
-    backgroundColor: 'tomato',
+    backgroundColor: '#FF5C4D',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     width: 300,
     overflow: 'hidden',
     borderRadius: 30,
-    backgroundColor: 'blue',
+    backgroundColor: '#FF5C4D',
   },
   scanner: {
     height: 600,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   errorText: {
-    color: 'red',
+    color: '#FF5C4D',
     fontSize: 16,
     fontWeight: 'bold',
     marginVertical: 10,

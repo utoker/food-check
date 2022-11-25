@@ -76,6 +76,7 @@ const Details = ({ route, navigation }) => {
   return (
     <View>
       <Header
+        backgroundColor="#FF5C4D"
         centerComponent={{ text: knownAs, style: styles.heading }}
       ></Header>
       {nutrientFacts.map((n, i) => (
@@ -111,7 +112,14 @@ const Details = ({ route, navigation }) => {
           </ListItem.Content>
         </ListItem>
       </ListItem.Accordion>
-      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Button
+        buttonStyle={{
+          backgroundColor: '#FF5C4D',
+          borderRadius: 5,
+        }}
+        title="Go back"
+        onPress={() => navigation.goBack()}
+      />
     </View>
   );
 };

@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "food-checker",
-    "slug": "food-checker",
+    "name": "Food Check",
+    "slug": "food-check",
+    "description": "Check what you eat",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },

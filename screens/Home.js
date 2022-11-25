@@ -26,7 +26,13 @@ const Home = ({ navigation }) => {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>
+          Requesting for camera permission
+        </Text>
+      </View>
+    );
   }
   if (hasPermission === false) {
     return (
@@ -45,7 +51,11 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header
-        centerComponent={{ text: 'Food Checker', style: styles.heading }}
+        backgroundColor="#FF5C4D"
+        centerComponent={{
+          text: 'Food Check',
+          style: styles.heading,
+        }}
       ></Header>
       <View style={styles.container}>
         <Text style={styles.title}>Scan a barcode to get nutrient facts</Text>
