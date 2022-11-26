@@ -1,22 +1,22 @@
-import { Button, Header, ListItem, Skeleton, Text } from '@rneui/themed';
+import { Button, Header, Image, ListItem, Skeleton, Text } from '@rneui/themed';
 import { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { API_URL, API_KEY, API_ID } from '@env';
 import axios from 'axios';
 import { nutrientNames, nutrientsUnits } from '../tools/nutrients';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from '../styles';
+import NutrientList from '../components/NutrientList';
 
 const Details = ({ route, navigation }) => {
-  // const route = { params: { upc: '0047495710052' } };
-  const [food, setFood] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [expanded, setExpanded] = useState(false);
+  const [label, setLabel] = useState('');
+  const [imageUri, setImageUri] = useState('');
+  const [ingredients, setIngredients] = useState('');
+  const [nutrients, setNutrients] = useState([]);
 
   const getFoodDetails = async () => {
     const upc = route.params.upc;
-    console.log(upc);
 
     try {
       const { data } = await axios.get(API_URL, {
@@ -26,7 +26,21 @@ const Details = ({ route, navigation }) => {
           upc: upc,
         },
       });
-      setFood(data);
+      setImageUri(data.hints[0].food.image);
+      setLabel(data.hints[0].food.label);
+      setIngredients(data.hints[0].food.foodContentsLabel);
+      const nutritionFacts = [];
+      for (const n in data.hints[0].food.nutrients) {
+        if (nutrientNames[n]) {
+          nutritionFacts.push({
+            nutrientName: nutrientNames[n],
+            unit: data.hints[0].food.nutrients[n],
+            unitType: nutrientsUnits[n],
+          });
+        }
+      }
+      setNutrients(nutritionFacts);
+
       setLoading(false);
     } catch (err) {
       console.log('err', err);
@@ -35,30 +49,12 @@ const Details = ({ route, navigation }) => {
     }
   };
   useEffect(() => {
-    getFoodDetails();
+    setTimeout(() => {
+      getFoodDetails();
+    }, 1111);
   }, []);
 
-  const nuts = food?.hints[0].food.nutrients;
-  const nutrientFacts = [];
-  if (nuts) {
-    for (const n in nuts) {
-      if (nutrientNames[n]) {
-        nutrientFacts.push({
-          nutrientName: nutrientNames[n],
-          unit: nuts[n],
-          unitType: nutrientsUnits[n],
-        });
-      }
-    }
-  }
-  const knownAs = food?.hints[0].food.knownAs;
-  const label = food?.hints[0].food.label;
-  const contents = food?.hints[0].food.foodContentsLabel;
-  // console.log('knownAs', food?.hints[0].food.knownAs);
-  // console.log('label', food?.hints[0].food.label);
-
-  //
-  if (error?.response.status === 404) {
+  if (error?.response?.status === 404) {
     return (
       <View>
         <Header
@@ -74,44 +70,18 @@ const Details = ({ route, navigation }) => {
     );
   }
   return (
-    <View>
+    <ScrollView>
       <Header
         backgroundColor="#FF5C4D"
-        centerComponent={{ text: knownAs, style: styles.heading }}
+        centerComponent={{ text: 'Nutrition Facts', style: styles.heading }}
       ></Header>
-      {nutrientFacts.map((n, i) => (
-        <ListItem key={i} bottomDivider>
-          <ListItem.Content>
-            {<ListItem.Title>{n.nutrientName}</ListItem.Title> || (
-              <Skeleton width={120} height={40} />
-            )}
-          </ListItem.Content>
-          <ListItem.Content right>
-            {(
-              <ListItem.Title>
-                {Math.round(n.unit) + ' ' + n.unitType}
-              </ListItem.Title>
-            ) || <Skeleton width={120} height={40} />}
-          </ListItem.Content>
-        </ListItem>
-      ))}
-      <ListItem.Accordion
-        content={
-          <ListItem.Content>
-            <ListItem.Title>Ingredients</ListItem.Title>
-          </ListItem.Content>
-        }
-        isExpanded={expanded}
-        onPress={() => {
-          setExpanded(!expanded);
-        }}
-      >
-        <ListItem>
-          <ListItem.Content>
-            <ListItem.Subtitle>{contents}</ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
-      </ListItem.Accordion>
+      <NutrientList
+        loading={loading}
+        imageUri={imageUri}
+        label={label}
+        nutrients={nutrients}
+        ingredients={ingredients}
+      />
       <Button
         buttonStyle={{
           backgroundColor: '#FF5C4D',
@@ -120,7 +90,7 @@ const Details = ({ route, navigation }) => {
         title="Go back"
         onPress={() => navigation.goBack()}
       />
-    </View>
+    </ScrollView>
   );
 };
 

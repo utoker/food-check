@@ -1,7 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  imageContainer: {
+    backgroundColor: '#FF5C4D',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 160,
+    aspectRatio: 1,
+  },
   container: {
+    // backgroundColor: '#FF5C4D',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -11,8 +21,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   header: {
+    paddingVertical: 10,
     backgroundColor: '#FF5C4D',
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
