@@ -49,15 +49,14 @@ const Details = ({ route, navigation }) => {
     }
   };
   useEffect(() => {
-    setTimeout(() => {
-      getFoodDetails();
-    }, 1111);
+    getFoodDetails();
   }, []);
 
   if (error?.response?.status === 404) {
     return (
       <View>
         <Header
+          backgroundColor="#FF5C4D"
           centerComponent={{ text: 'Not Found', style: styles.heading }}
         />
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -65,7 +64,13 @@ const Details = ({ route, navigation }) => {
             Sorry, we couldn't find any information about this product.
           </Text>
         </View>
-        <Button title="Go back" onPress={() => navigation.goBack()} />
+        <Button
+          buttonStyle={{
+            backgroundColor: '#FF5C4D',
+          }}
+          title="Go back"
+          onPress={() => navigation.goBack()}
+        />
       </View>
     );
   }
@@ -85,7 +90,6 @@ const Details = ({ route, navigation }) => {
       <Button
         buttonStyle={{
           backgroundColor: '#FF5C4D',
-          borderRadius: 5,
         }}
         title="Go back"
         onPress={() => navigation.goBack()}
