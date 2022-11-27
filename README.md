@@ -5,7 +5,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-    <img src="assets/food500.gif" alt="Gif">
+    <img src="assets/foodcheck.gif" alt="Gif">
 
 <h3 align="center">Food Check</h3>
     <br />
