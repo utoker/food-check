@@ -14,7 +14,7 @@
 
 ## About The Project
 
-Food Scanner is a simple barcode grocery scanner that lets you quickly discover a food's ingredient information.
+Food Check is a simple barcode grocery scanner that lets you quickly discover a food's ingredient information.
 
 ### Built With
 
