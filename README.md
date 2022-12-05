@@ -31,8 +31,6 @@ Umut Toker - utoker@gmail.com
 
 LinkedIn: [https://www.linkedin.com/in/utoker/](https://www.linkedin.com/in/utoker/)
 
-Project Link: [https://github.com/utoker/link-shortener](https://github.com/utoker/link-shortener)
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
