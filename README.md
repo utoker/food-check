@@ -18,10 +18,9 @@ Food Check is a simple barcode grocery scanner that lets you quickly discover a 
 
 ### Built With
 
-- [React.js](https://reactjs.org/)
+- [JavaScript](https://www.javascript.com/)
 - [React Native](https://reactnative.dev/)
 - [React Native Elements](https://reactnativeelements.com/)
-- [React Navigation](https://reactnavigation.org/)
 - [Expo](https://expo.dev/)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
